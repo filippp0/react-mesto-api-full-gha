@@ -101,7 +101,7 @@ class Api {
 /*создаю экземпляр класса Api*/
 
 const api = new Api({
-  baseUrl: 'http://api.mesto-66.fil.nomoreparties.co',
+  baseUrl: 'https://api.mesto-66.fil.nomoreparties.co',
 });
 
 export default api
