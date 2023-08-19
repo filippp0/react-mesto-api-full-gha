@@ -72,7 +72,7 @@ function App() {
     if (localStorage.jwt) {
       getUserData(localStorage.jwt)
         .then(res => {
-          setDataUser(res.data.email)
+          setDataUser(res.email)
           setLoggedIn(true)
           setIsCheckToken(false)
           navigate('/')
@@ -109,7 +109,7 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       setIsLoadingCards(true)
-      Promise.all([api.getInfo(), api.getCards()])
+      Promise.all([api.getInfo(localStorage.jwt), api.getCards(localStorage.jwt)])
         .then(([dataUser, dataCards]) => {
           setCurrentUser(dataUser)
           setCards(dataCards)
@@ -129,7 +129,7 @@ function App() {
 
   const handleDeleteSubmit = useCallback(() => {
     function makeRequest() {
-      return (api.deleteCard(deleteCardId)
+      return (api.deleteCard(deleteCardId, localStorage.jwt)
         .then(() => {
           setCards(cards.filter(card => { return card._id !== deleteCardId }))
         })
@@ -140,7 +140,7 @@ function App() {
 
   const handleUpdateUser = useCallback((dataUser) => {
     function makeRequest() {
-      return (api.setUserInfo(dataUser)
+      return (api.setUserInfo(dataUser, localStorage.jwt)
         .then(res => {
           setCurrentUser(res)
         }))
@@ -150,7 +150,7 @@ function App() {
 
   const handleUpdateAvatar = useCallback((dataUser) => {
     function makeRequest() {
-      return (api.setNewAvatar(dataUser)
+      return (api.setNewAvatar(dataUser, localStorage.jwt)
         .then(res => {
           setCurrentUser(res)
         }))
@@ -160,7 +160,7 @@ function App() {
 
   const handleAddCard = useCallback((dataCard) => {
     function makeRequest() {
-      return (api.addCard(dataCard)
+      return (api.addCard(dataCard, localStorage.jwt)
         .then(res => {
           setCards([res, ...cards]);
         }))
@@ -171,13 +171,13 @@ function App() {
   const handleLike = useCallback((card) => {
     const isLike = card.likes.some(element => currentUser._id === element._id)
     if (isLike) {
-      api.deleteLike(card._id)
+      api.deleteLike(card._id, localStorage.jwt)
         .then(res => {
           setCards(cards => cards.map((item) => item._id === card._id ? res : item))
         })
         .catch((err) => console.error(`Ошибка при снятии лайка ${err}`))
     } else {
-      api.addLike(card._id)
+      api.addLike(card._id, localStorage.jwt)
         .then(res => {
           setCards(cards => cards.map((item) => item._id === card._id ? res : item))
         })

@@ -1,4 +1,4 @@
-const baseUrl = 'https://auth.nomoreparties.co'
+const baseUrl = 'http://api.mesto-66.fil.nomoreparties.co'
 
 function getResponseData(res) {
   return res.ok ? res.json() : Promise.reject(`${res.status} ${res.statusText}`)
