@@ -169,7 +169,7 @@ function App() {
   }, [cards, handleSubmit])
 
   const handleLike = useCallback((card) => {
-    const isLike = card.likes.some(element => currentUser._id === element._id)
+    const isLike = card.likes.some(element => currentUser._id === element)
     if (isLike) {
       api.deleteLike(card._id, localStorage.jwt)
         .then(res => {

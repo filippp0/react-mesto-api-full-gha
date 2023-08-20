@@ -1,7 +1,7 @@
 import './ButtonLike.css'
 
 export default function ButtonLike({ myid, card, onCardLike }) {
-  const isLike = card.likes.some(element => myid === element._id)
+  const isLike = card.likes.some(element => myid === element)
 
   return (
     <>
