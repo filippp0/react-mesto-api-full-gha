@@ -22,7 +22,7 @@ module.exports.addCard = (req, res, next) => {
 
 module.exports.getCards = (req, res, next) => {
   Card.find({})
-    .then((cards) => res.status(HTTP_STATUS_OK).send(cards))
+    .then((cards) => res.status(HTTP_STATUS_OK).send(cards.reverse()))
     .catch(next);
 };
 
